@@ -58,8 +58,16 @@
 					<textarea data-ng-model="comment" id="comment" cols="30" rows="10" placeholder="Comment" class="form-control"></textarea>
 				</div>
 			</div>
+            <!--<form ng-app="fileUpload" ng-controller="logoCtrl" name="form">-->
+                <!--<label>Upload photographs</label>
+                    <input type="file" data-ng-model="photograph" multiple accept="image/*">-->
+                Upload right away after file selection:
+                <div class="button" ngf-select="" ng-model="photograph" name="photograph" ngf-pattern="'image/*'"
+                    ngf-accept="'image/*'" ngf-max-size="5MB" multiple="multiple">Upload photographs</div>
+                Image thumbnail: <img ngf-thumbnail="file || '/thumb.jpg'">
+            <!--</form>-->
 			<div>
-				<button type="submit" class="btn btn-lg btn-primary btn-block">Create TODO</button>
+				<button type="submit" class="btn btn-lg btn-primary btn-block">Create</button>
 			</div>
 			<div data-ng-show="error">
 				<strong data-ng-bind="error"></strong>

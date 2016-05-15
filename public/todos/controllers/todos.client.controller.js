@@ -5,7 +5,8 @@ angular.module('todos').controller('TodosController', ['$scope', '$routeParams',
 		$scope.create = function() {
 			var todo = new Todos({
 				title: this.title,
-				comment: this.comment
+				comment: this.comment,
+                photograph: this.photograph
 			});
 
 			todo.$save(function(response) {

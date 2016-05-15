@@ -24,6 +24,11 @@ var TodoSchema = new Schema({
 	completed: {
 		type: Boolean,
 		default: false
-	}
+	},
+    photograph: {
+        type: String,
+        default: '',
+        required: false
+    }
 });
 mongoose.model('Todo', TodoSchema);
