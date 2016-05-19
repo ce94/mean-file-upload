@@ -1,6 +1,27 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
+
+/**
+ * File schema
+ */
+var FileSchema = new Schema({
+  url: String,
+  mimeType: String,
+  data: Buffer
+}, {
+  _id: false
+});
+
+/**
+ * Transformation to JSON
+ */
+FileSchema.options.toJSON = {
+  transform: function(doc, ret) {
+    return ret.url || '';
+  }
+};
+
 var TodoSchema = new Schema({
 	created: {
 		type: Date,
@@ -25,10 +46,6 @@ var TodoSchema = new Schema({
 		type: Boolean,
 		default: false
 	},
-    photograph: {
-        type: String,
-        default: '',
-        required: false
-    }
+    photograph: FileSchema
 });
 mongoose.model('Todo', TodoSchema);

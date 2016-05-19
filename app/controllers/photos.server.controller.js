@@ -4,23 +4,36 @@ var mongoose = require('mongoose'),
 var multer = require('multer');
 
 /**
+ * Photo URL generator
+ */
+function photoUrl(id, mimeType, timestamp) {
+  var ext = mimeType.split('/')[1].toLowerCase().replace('jpeg', 'jpg');
+  var url = 'api/todos/' + id + '/photo.' + ext;
+  if (timestamp) {
+    url += '?' + String(Math.floor(Date.now() / 1000));
+  }
+  return url;
+}
+
+/**
 * Upload photograph
 */
 exports.save = function(req, res, next) {
 
     //Get club and file
-    var club = req.user.club;
+    var todo = req.todo;
     var file = req.file;
 
     //Update
-    club.photograph = {
-        data: file.buffer,
-        mimeType: file.mimetype
+    todo.photograph = {
+      url: photoUrl(todo._id, file.mimetype, true),
+      data: file.buffer,
+      mimeType: file.mimetype
     };
 
     //Save
-    club.save().then(() => {
-        res.end();
+    todo.save().then(function() {
+      res.end();
     }).catch(next);
 };
 
@@ -28,9 +41,9 @@ exports.save = function(req, res, next) {
 * Stream photograph
 */
 exports.stream = function(req, res, next) {
-    var club = req.club;
-    res.contentType(club.photograph.mimeType);
-    res.send(club.photograph.data);
+    var todo = req.todo;
+    res.contentType(todo.photograph.mimeType);
+    res.send(todo.photograph.data);
 };
 
 /**

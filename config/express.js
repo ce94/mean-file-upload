@@ -9,10 +9,13 @@ module.exports = function() {
 	var app = express();
 
 	app.use(bodyParser.urlencoded({
-		extended: true
+		extended: true,
+    limit: '10mb'
 	}));
 
-	app.use(bodyParser.json());
+	app.use(bodyParser.json({
+    limit: '5mb'
+  }));
 
 	app.use(session({
 		saveUninitialized: true,

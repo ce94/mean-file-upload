@@ -1,14 +1,20 @@
 var users = require('../../app/controllers/users.server.controller'),
-	todos = require('../../app/controllers/todos.server.controller'),
-    logoCtrl = require('../../app/controllers/logoCtrl.server.controller');
+	  todos = require('../../app/controllers/todos.server.controller'),
+    photos = require('../../app/controllers/photos.server.controller');
 
 module.exports = function(app) {
 	app.route('/api/todos')
 		.get(todos.list)
-		.post(users.requiresLogin, todos.create, logoCtrl.upload, logoCtrl.save);
+		.post(users.requiresLogin, todos.create);
+
+  app.route('/api/todos/:todoId/photo')
+		.post(users.requiresLogin, todos.hasAuthorization, photos.upload, photos.save);
+
+  app.route('/api/todos/:todoId/photo.*')
+    .get(photos.stream);
 
 	app.route('/api/todos/:todoId')
-		.get(todos.read, logoCtrl.stream)
+		.get(todos.read)
 		.put(users.requiresLogin, todos.hasAuthorization, todos.update)
 		.delete(users.requiresLogin, todos.hasAuthorization, todos.delete);
 

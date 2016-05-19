@@ -1,5 +1,5 @@
-angular.module('todos').controller('TodosController', ['$scope', '$routeParams', '$location', 'Authentication', 'Todos',
-	function($scope, $routeParams, $location, Authentication, Todos) {
+angular.module('todos').controller('TodosController', ['$scope', '$routeParams', '$location', 'Authentication', 'Todos', 'Upload',
+	function($scope, $routeParams, $location, Authentication, Todos, Upload) {
 		$scope.authentication = Authentication;
 
 		$scope.create = function() {
@@ -10,7 +10,12 @@ angular.module('todos').controller('TodosController', ['$scope', '$routeParams',
 			});
 
 			todo.$save(function(response) {
-				$location.path('todos/' + response._id);
+        if ($scope.file) {
+          $scope.uploadImage(response._id);
+        }
+				else {
+          $location.path('todos/' + response._id);
+        }
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -49,5 +54,29 @@ angular.module('todos').controller('TodosController', ['$scope', '$routeParams',
 				});
 			}
 		};
+
+    /**
+       * Upload
+       */
+      $scope.uploadImage = function(todoId) {
+        Upload.upload({
+          url: 'http://localhost:1337/api/todos/' + todoId + '/photo',
+          data: {
+            photograph: $scope.file
+          }
+        }).then(function() {
+          $location.path('todos/' + todoId);
+        });
+      };
+
+      /**
+       * Selected image
+       */
+      $scope.selectedImage = function(file) {
+        if (!file || !Upload.isFile(file)) {
+          return;
+        }
+        $scope.file = file;
+      };
 	}
 ]);

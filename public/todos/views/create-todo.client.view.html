@@ -25,7 +25,7 @@
                     <li class="page-scroll" data-ng-show="!authentication.user">
                         <a href="/register">Register</a>
                     </li>
-                    
+
                     <!--<li class="page-scroll">
                         <a href="https://github.com/Hitman666/MEAN_MVC_4thTutorial">Fork on Github</a>
                     </li>-->
@@ -34,7 +34,7 @@
                     </li>
                     <li class="page-scroll" data-ng-show="authentication.user">
                         <a href="/logout">Hello <span data-ng-bind="authentication.user.name" data-ng-show="authentication.user"></span>, Logout?</a>
-                    </li>                    
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -61,10 +61,9 @@
             <!--<form ng-app="fileUpload" ng-controller="logoCtrl" name="form">-->
                 <!--<label>Upload photographs</label>
                     <input type="file" data-ng-model="photograph" multiple accept="image/*">-->
-                Upload right away after file selection:
-                <div class="button" ngf-select="" ng-model="photograph" name="photograph" ngf-pattern="'image/*'"
-                    ngf-accept="'image/*'" ngf-max-size="5MB" multiple="multiple">Upload photographs</div>
-                Image thumbnail: <img ngf-thumbnail="file || '/thumb.jpg'">
+                <div class="button" ngf-select="selectedImage($file)" ng-model="photograph" name="photograph" ngf-pattern="'image/*'"
+                    ngf-accept="'image/*'" ngf-max-size="5MB">Upload photograph</div>
+                Image thumbnail: <img ng-if="file" ngf-thumbnail="file">
             <!--</form>-->
 			<div>
 				<button type="submit" class="btn btn-lg btn-primary btn-block">Create</button>

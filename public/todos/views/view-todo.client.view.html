@@ -25,7 +25,7 @@
                     <li class="page-scroll" data-ng-show="!authentication.user">
                         <a href="/register">Register</a>
                     </li>
-                    
+
                     <li class="page-scroll" data-ng-show="authentication.user">
                         <a href="/#!/todos/create">CREATE</a>
                     </li>
@@ -34,7 +34,7 @@
                     </li>
                     <li class="page-scroll" data-ng-show="authentication.user">
                         <a href="/logout">Hello <span data-ng-bind="authentication.user.name" data-ng-show="authentication.user"></span>, Logout?</a>
-                    </li>                    
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -48,6 +48,9 @@
 			<a href="/#!/todos/{{todo._id}}/edit">edit</a>
 			<a href="#" data-ng-click="delete();">delete</a>
 		</div>
+    <div ng-if="todo.photograph">
+      <img ng-src="{{todo.photograph}}" />
+    </div>
 		<small>
 		<em data-ng-bind="todo.created | date:'mediumDate'"></em>
 		</small>
